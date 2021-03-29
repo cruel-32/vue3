@@ -1,6 +1,10 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <p>{{ state }}</p>
+
+    <button @click="setStateNormal">set state "normal"</button>
+    <button @click="setStateError">set state "error"</button>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
       check out the
@@ -135,12 +139,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 
 export default defineComponent({
   name: "HelloWorld",
   props: {
     msg: String,
+  },
+  setup(props, context ) {
+    console.log("this", this);
+    console.log("props", props);
+    console.log("context", context);
+
+    console.log("context.attrs", context.attrs);
+
+    const state = ref("normal");
+
+    onMounted(() => {
+      console.log("onMounted-test");
+    });
+
+    const setStateNormal = () => {
+      state.value = "normal";
+    };
+    const setStateError = () => {
+      state.value = "error";
+    };
+
+    return {
+      state,
+      setStateNormal,
+      setStateError,
+    };
   },
 });
 </script>
